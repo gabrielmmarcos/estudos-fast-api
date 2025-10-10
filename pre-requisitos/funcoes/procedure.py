@@ -12,5 +12,5 @@ def aumenta_lista(num):
 print(lista)
 aumenta_lista(2)
 print(lista)
-aumenta_lista(3)
+aumenta_lista(3)    
 print(lista)
