@@ -1,20 +1,51 @@
 [project]
-name = "aula01"
+name = "biblio-fzs-backend-web"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "GabrielMMMMM",email = "gabrielmmarcos7@gmail.com"}
+{name = "gabrielmmarcos",email = "gabrielmmarcos7@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.13,<4.0"
+requires-python = ">=3.13, <4.0"
 dependencies = [
-    "fastapi[standard] (>=0.118.3,<0.119.0)",
-    "uvicorn (>=0.37.0,<0.38.0)"
+"fastapi[standard]~=0.111.0", 
 ]
-
-[tool.poetry]
-packages = [{include = "aula01", from = "src"}]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+"ruff (>=0.14.1,<0.15.0)",
+"taskipy (>=1.14.1,<2.0.0)",
+"setuptools (>=80.9.0,<81.0.0)",
+"pytest-asyncio (>=1.2.0,<2.0.0)"
+]
+pytest = [
+"pytest-cov (>=7.0.0,<8.0.0)"
+]
+
+[tool.ruff]
+line-length = 79
+extend-exclude = ['migration']
+
+[tool.ruff.lint]
+preview = true
+select = ['I','F','E','W','PL','PT']
+
+[tool.ruff.format]
+preview = true
+quote-style = 'single'
+
+[tool.pytest.ini_options]
+pythonpath = "."
+addopts = '-p no:warnings'
+
+[tool.taskipy.tasks]
+lint = 'ruff check'
+pre_format = 'ruff check --fix'
+format = 'ruff format'
+run = 'fastapi dev src/aula01/app.py'
+pre_test = 'task lint'
+test = 'pytest -s -x --cov=fast_zero'
